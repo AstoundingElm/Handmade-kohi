@@ -98,3 +98,5 @@ STATIC_ASSERT(sizeof(f64) == 8, "Expected f64 to be 8 bytes.");
 #endif
 #endif
 
+#define arraySize(array) ((sizeof(array)) / (sizeof(array[0])))
+

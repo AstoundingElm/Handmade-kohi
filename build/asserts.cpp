@@ -10,7 +10,7 @@
 #define debugBreak() __builtin_trap()
 #endif
 
-void reportAssertionFailure(const char * expression, const char * message, const char * file, i32 line){
+static inline void reportAssertionFailure(const char * expression, const char * message, const char * file, i32 line){
 logOutput(LOG_LEVEL_FATAL, "Assertion failure: %s message: %s in file: %s line: %d", expression, message, file, line );
 
 }

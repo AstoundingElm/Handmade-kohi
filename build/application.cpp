@@ -1,8 +1,9 @@
 #include "defines.h"
 
 extern "C" char * getMemoryUsageStr();
-
+#include "clock.h"
 #include "input.cpp"
+#include "rendererFrontend.cpp"
 
 struct applicationConfig{
 
@@ -34,6 +35,7 @@ game * gameInst;
     platformState platform;
     i16 width;
     i16 height;
+    kclock clock;
     f64 lastTime;
 };
 
@@ -43,7 +45,7 @@ b8 application_on_key(u16 code, void* sender, void* listener_inst, eventContext 
 static b8 initialized = false;
 static applicationState appState;
 
-b8 applicationCreate(game * gameInst){
+static inline b8 applicationCreate(game * gameInst){
 
     if(initialized){
         KERROR("Application create called more than once!");
@@ -83,6 +85,12 @@ b8 applicationCreate(game * gameInst){
             return false;
           }
 
+
+        if(!rendererInitialize(gameInst->appConfig.name, &appState.platform)){
+
+            KFATAL("Failed to initialize renderer. Aborting aplication");
+            return false;
+        }
     if (!appState.gameInst->initialize(appState.gameInst)) {
         KFATAL("Game failed to initialize.");
         return FALSE;
@@ -93,8 +101,14 @@ b8 applicationCreate(game * gameInst){
           return true;
           
 }
-KAPI b8 applicationRun(){
+static inline KAPI b8 applicationRun(){
 
+clockStart(&appState.clock);
+clockUpdate(&appState.clock);
+appState.lastTime = appState.clock.elapsed;
+f64 runningTime = 0;
+long frameCount = 0;
+f64 targetFrameSeconds = 1.0f/60;
 
 KINFO(getMemoryUsageStr());
     while(appState.isRunning){
@@ -104,20 +118,47 @@ KINFO(getMemoryUsageStr());
         }
 
         if(!appState.isSuspended) {
-            if (!appState.gameInst->update(appState.gameInst, (f32)0)) {
+
+            clockUpdate(&appState.clock);
+            f64 currentTime = appState.clock.elapsed;
+            f64 delta = (currentTime - appState.lastTime);
+            f64 frameStartTime = platformGetAbsoluteTime();
+            if (!appState.gameInst->update(appState.gameInst, (f32)delta)) {
                 KFATAL("Game update failed, shutting down.");
                 appState.isRunning = FALSE;
                 break;
             }
 
             // Call the game's render routine.
-            if (!appState.gameInst->render(appState.gameInst, (f32)0)) {
+            if (!appState.gameInst->render(appState.gameInst, (f32)delta)) {
                 KFATAL("Game render failed, shutting down.");
                 appState.isRunning = FALSE;
                 break;
             }
 
-            inputUpdate(0);
+            renderPacket packet;
+            packet.deltaTime = delta;
+            rendererDrawFrame(&packet);
+
+            f64 frameEndTime = platformGetAbsoluteTime();
+            f64 frameElapsedTime = frameEndTime - frameStartTime;
+            runningTime += frameElapsedTime;
+            f64 remainingSeconds = targetFrameSeconds - frameElapsedTime;
+
+            if(remainingSeconds > 0){
+
+                u64 remainingMs = (remainingMs * 1000);
+            
+
+            b8 limitFrames = false;
+            if(remainingMs > 0 && limitFrames){
+                platformSleep(remainingMs -1);
+            }
+            frameCount ++;
+           
+            }
+
+            inputUpdate(delta);
         }
     }
             appState.isRunning = false;
@@ -127,6 +168,8 @@ KINFO(getMemoryUsageStr());
             eventUnRegister(EVENT_CODE_KEY_RELEASED, 0, application_on_key);
             eventShutdown();
             inputShutdown(); 
+
+            rendererShutdown();
             platformShutdown(&appState.platform);
             return true;
 };

@@ -13,7 +13,7 @@ enum {
 #define DARRAY_DEFAULT_CAPACITY 1
 #define DARRAY_RESIZE_FACTOR 2
 
-#define darray_length(array) \
+#define darrayLength(array) \
     _darray_field_get(array, DARRAY_LENGTH)
 
     #define darray_stride(array) \
@@ -57,7 +57,7 @@ static inline KAPI void _darray_field_set(void* array, u64 field, u64 value){
 
 template<class T> static T * _darray_resize(T* array){
 
-      u64 length = darray_length(array);
+      u64 length = darrayLength(array);
     u64 stride = darray_stride(array);
     T* temp = (T*)_darray_create(
         (DARRAY_RESIZE_FACTOR * darray_capacity(array)),
@@ -71,7 +71,7 @@ template<class T> static T * _darray_resize(T* array){
 
 template<class T> static T *  _darray_push(T* array, const void* value_ptr){
 
-     u64 length = darray_length(array);
+     u64 length = darrayLength(array);
     u64 stride = darray_stride(array);
     if (length >= darray_capacity(array)) {
         array = _darray_resize(array);
@@ -86,7 +86,7 @@ template<class T> static T *  _darray_push(T* array, const void* value_ptr){
 
 static inline KAPI void _darray_pop(void* array, void* dest){
 
-     u64 length = darray_length(array);
+     u64 length = darrayLength(array);
     u64 stride = darray_stride(array);
     u64 addr = (u64)array;
     addr += ((length - 1) * stride);
@@ -96,7 +96,7 @@ static inline KAPI void _darray_pop(void* array, void* dest){
 
 template<class T> static T *  _darray_pop_at(T* array, u64 index, T* dest){
 
- u64 length = darray_length(array);
+ u64 length = darrayLength(array);
     u64 stride = darray_stride(array);
     if (index >= length) {
         KERROR("Index outside the bounds of this array! Length: %i, index: %index", length, index);
@@ -148,7 +148,7 @@ template<class T> static T * _darray_insert_at(T* array, u64 index, T* value_ptr
     return array;
 };
 
-#define darray_create(type) \
+#define darrayCreate(type) \
     _darray_create(DARRAY_DEFAULT_CAPACITY, sizeof(type)) \
 
 #define darray_reserve(type, capacity) \

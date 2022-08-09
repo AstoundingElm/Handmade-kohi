@@ -131,10 +131,10 @@ static inline KAPI b8 eventRegister(u16 code, void * listener, PFN_on_event onEv
     }
 
     if(state.registered[code].events == 0) {
-        state.registered[code].events = (registeredEvent *)darray_create(registeredEvent);
+        state.registered[code].events = (registeredEvent *)darrayCreate(registeredEvent);
     }
 
-    u64 registered_count = darray_length(state.registered[code].events);
+    u64 registered_count = darrayLength(state.registered[code].events);
     for(u64 i = 0; i < registered_count; ++i) {
         if(state.registered[code].events[i].listener == listener) {
             // TODO: warn
@@ -165,7 +165,7 @@ static inline b8 eventUnRegister(u16 code, void * listener, PFN_on_event onEvent
         return FALSE;
     }
 
-    u64 registered_count = darray_length(state.registered[code].events);
+    u64 registered_count = darrayLength(state.registered[code].events);
     for(u64 i = 0; i < registered_count; ++i) {
         registeredEvent e = state.registered[code].events[i];
         if(e.listener == listener && e.callback == onEvent) {
@@ -191,7 +191,7 @@ static inline KAPI b8 eventFire(u16 code, void * sender, eventContext context){
         return FALSE;
     }
 
-    u64 registeredCount = darray_length(state.registered[code].events);
+    u64 registeredCount = darrayLength(state.registered[code].events);
     for(u64 i = 0; i < registeredCount; ++i) {
         registeredEvent e = state.registered[code].events[i];
         if(e.callback(code, sender, e.listener, context)) {

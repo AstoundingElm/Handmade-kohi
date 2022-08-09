@@ -1,7 +1,9 @@
 #pragma once
 #include "defines.h"
 #include "logger.h"
-
+#define VK_USE_PLATFORM_XCB_KHR
+#include <vulkan/vulkan.h>
+#include <vulkan/vulkan_xcb.h>
 #include <xcb/xcb.h>
 #include <X11/keysym.h>
 #include <X11/XKBlib.h>
@@ -21,6 +23,7 @@
 #include <unistd.h>
 #endif
 
+
 struct internalState{
 
     Display * display;
@@ -29,12 +32,15 @@ struct internalState{
     xcb_screen_t * screen;
     xcb_atom_t wmProtocols;
     xcb_atom_t wmDeleteWin;
+    VkSurfaceKHR surface;
 };
 
 struct platformState{
 
     void * internalState;
 };
+
+
 
 static inline b8 platformStartup(platformState * platState, const char * applicationName, i32 x, i32 y, i32 width, i32 height){
 
@@ -403,7 +409,7 @@ keys translate_key_code(u32 x_keycode) {
     }
 }
 
-#include "input.cpp"
+//#include "input.cpp"
 extern "C" void inputProcessKey(keys key, b8 pressed);
 extern "C" void  inputProcessButton(buttons button, b8 pressed);
 extern "C" void inputProcessMouseMove(i16 x, i16 y);
@@ -528,6 +534,7 @@ static inline void platformSleep(u64 ms){
     usleep((ms % 1000) * 1000);
 #endif
 }
+
 
 
 
