@@ -1,0 +1,94 @@
+[INFO]:  Input subsystem initialized
+[FATAL]: A test message: 3.140000
+[ERROR]: A test message: 3.140000
+[WARN]:  A test message: 3.140000
+[INFO]:  A test message: 3.140000
+[DEBUG]: A test message: 3.140000
+[TRACE]: A test message: 3.140000
+[DEBUG]: Required extensions:
+[DEBUG]: VK_KHR_surface
+[DEBUG]: VK_KHR_xcb_surface
+[DEBUG]: VK_EXT_debug_utils
+[INFO]:  Validation layers enabled. Enumerating...
+[INFO]:  Searching for layer: VK_LAYER_KHRONOS_validation...
+[INFO]:  Found.
+[INFO]:  All required validation layers are present.
+[INFO]:  Vulkan Instance created.
+[DEBUG]: Creating Vulkan debugger...
+[DEBUG]: Vulkan debugger created.
+[DEBUG]: Creating Vulkan surface...
+[DEBUG]: Vulkan surface created.
+[INFO]:  Graphics | Present | Compute | Transfer | Name
+[INFO]:         1 |       1 |       1 |        1 | (null) (RADV RAVEN2)
+[INFO]:  Device meets queue requirements.
+[TRACE]: Graphics Family Index: 0
+[TRACE]: Present Family Index:  1
+[TRACE]: Transfer Family Index: 1
+[TRACE]: Compute Family Index:  1
+[INFO]:  Selected device: '(null) (RADV RAVEN2)'.
+[INFO]:  GPU type is Integrated.
+[INFO]:  GPU Driver version: 22.2.99
+[INFO]:  Vulkan API version: 1.3.224
+[INFO]:  Shared System memory: 1.67 GiB
+[INFO]:  Local GPU memory: 3.33 GiB
+[INFO]:  Physical device selected.
+[INFO]:  Creating logical device...
+[INFO]:  Loading layer library libVkLayer_khronos_validation.so
+[INFO]:  Inserted device layer VK_LAYER_KHRONOS_validation (libVkLayer_khronos_validation.so)
+[INFO]:  Loading layer library libVkLayer_MESA_device_select.so
+[INFO]:  Failed to find vkGetDeviceProcAddr in layer libVkLayer_MESA_device_select.so
+[ERROR]: Validation Error: [ VUID-VkDeviceCreateInfo-queueFamilyIndex-02802 ] Object 0: handle = 0x55715e631d70, type = VK_OBJECT_TYPE_PHYSICAL_DEVICE; | MessageID = 0x29498778 | CreateDevice(): pCreateInfo->pQueueCreateInfos[2].queueFamilyIndex (=1) is not unique and was also used in pCreateInfo->pQueueCreateInfos[1]. The Vulkan spec states: The queueFamilyIndex member of each element of pQueueCreateInfos must be unique within pQueueCreateInfos, except that two members can share the same queueFamilyIndex if one is a protected-capable queue and one is not a protected-capable queue (https://www.khronos.org/registry/vulkan/specs/1.3-extensions/html/vkspec.html#VUID-VkDeviceCreateInfo-queueFamilyIndex-02802)
+[INFO]:  Logical device created.
+[INFO]:  Queues obtained.
+[INFO]:  Graphics command pool created.
+[INFO]:  Swapchain created successfully.
+[DEBUG]: Vulkan command buffers created.
+[DEBUG]: Graphics pipeline created!
+[INFO]:  Vulkan renderer initialized successfully.
+[DEBUG]: gameInitialize() callsed!
+[INFO]:  System memory use (tagged):
+  UNKNOWN    : 0.00B
+  ARRAY      : 0.00B
+  LINEAR_ALLC: 0.00B
+  DARRAY     : 2.88KiB
+  DICT       : 0.00B
+  RING_QUEUE : 0.00B
+  BST        : 0.00B
+  STRING     : 0.00B
+  APPLICATION: 0.00B
+  JOB        : 0.00B
+  TEXTURE    : 0.00B
+  MAT_INST   : 0.00B
+  RENDERER   : 248.00B
+  GAME       : 0.00B
+  TRANSFORM  : 0.00B
+  ENTITY     : 0.00B
+  ENTITY_NODE: 0.00B
+  SCENE      : 0.00B
+
+[DEBUG]: Window resize: 1280, 704
+[INFO]:  Vulkan renderer backend->resized: w/h/gen: 12807041
+[DEBUG]: Window resize: 1292, 704
+[INFO]:  Vulkan renderer backend->resized: w/h/gen: 12927042
+[INFO]:  Swapchain created successfully.
+[DEBUG]: Vulkan command buffers created.
+[INFO]:  Resized, booting.
+[ERROR]: Validation Error: [ VUID-vkBeginCommandBuffer-commandBuffer-00049 ] Object 0: handle = 0x55715ef7b240, type = VK_OBJECT_TYPE_COMMAND_BUFFER; | MessageID = 0x84029a9f | Calling vkBeginCommandBuffer() on active VkCommandBuffer 0x55715ef7b240[] before it has completed. You must check command buffer fence before this call. The Vulkan spec states: commandBuffer must not be in the recording or pending state (https://www.khronos.org/registry/vulkan/specs/1.3-extensions/html/vkspec.html#VUID-vkBeginCommandBuffer-commandBuffer-00049)
+[ERROR]: Validation Error: [ VUID-vkBeginCommandBuffer-commandBuffer-00049 ] Object 0: handle = 0x55715ef7b240, type = VK_OBJECT_TYPE_COMMAND_BUFFER; | MessageID = 0x84029a9f | Calling vkBeginCommandBuffer() on active VkCommandBuffer 0x55715ef7b240[] before it has completed. You must check command buffer fence before this call. The Vulkan spec states: commandBuffer must not be in the recording or pending state (https://www.khronos.org/registry/vulkan/specs/1.3-extensions/html/vkspec.html#VUID-vkBeginCommandBuffer-commandBuffer-00049)
+[ERROR]: Validation Error: [ VUID-vkBeginCommandBuffer-commandBuffer-00049 ] Object 0: handle = 0x55715ead2100, type = VK_OBJECT_TYPE_COMMAND_BUFFER; | MessageID = 0x84029a9f | Calling vkBeginCommandBuffer() on active VkCommandBuffer 0x55715ead2100[] before it has completed. You must check command buffer fence before this call. The Vulkan spec states: commandBuffer must not be in the recording or pending state (https://www.khronos.org/registry/vulkan/specs/1.3-extensions/html/vkspec.html#VUID-vkBeginCommandBuffer-commandBuffer-00049)
+[INFO]:  EVENT_CODE_APPLICATION_QUIT recieved, shutting down.
+
+[DEBUG]: Destroying Vulkan device...
+[INFO]:  Destroying command pools...
+[INFO]:  Destroying logical device...
+[ERROR]: Validation Error: [ VUID-vkDestroyDevice-device-00378 ] Object 0: handle = 0x55715ebe0240, type = VK_OBJECT_TYPE_DEVICE; Object 1: handle = 0x250000000025, type = VK_OBJECT_TYPE_BUFFER; | MessageID = 0x71500fba | OBJ ERROR : For VkDevice 0x55715ebe0240[], VkBuffer 0x250000000025[] has not been destroyed. The Vulkan spec states: All child objects created on device must have been destroyed prior to destroying device (https://www.khronos.org/registry/vulkan/specs/1.3-extensions/html/vkspec.html#VUID-vkDestroyDevice-device-00378)
+[ERROR]: Validation Error: [ VUID-vkDestroyDevice-device-00378 ] Object 0: handle = 0x55715ebe0240, type = VK_OBJECT_TYPE_DEVICE; Object 1: handle = 0x270000000027, type = VK_OBJECT_TYPE_BUFFER; | MessageID = 0x71500fba | OBJ ERROR : For VkDevice 0x55715ebe0240[], VkBuffer 0x270000000027[] has not been destroyed. The Vulkan spec states: All child objects created on device must have been destroyed prior to destroying device (https://www.khronos.org/registry/vulkan/specs/1.3-extensions/html/vkspec.html#VUID-vkDestroyDevice-device-00378)
+[ERROR]: Validation Error: [ VUID-vkDestroyDevice-device-00378 ] Object 0: handle = 0x55715ebe0240, type = VK_OBJECT_TYPE_DEVICE; Object 1: handle = 0x280000000028, type = VK_OBJECT_TYPE_DEVICE_MEMORY; | MessageID = 0x71500fba | OBJ ERROR : For VkDevice 0x55715ebe0240[], VkDeviceMemory 0x280000000028[] has not been destroyed. The Vulkan spec states: All child objects created on device must have been destroyed prior to destroying device (https://www.khronos.org/registry/vulkan/specs/1.3-extensions/html/vkspec.html#VUID-vkDestroyDevice-device-00378)
+[ERROR]: Validation Error: [ VUID-vkDestroyDevice-device-00378 ] Object 0: handle = 0x55715ebe0240, type = VK_OBJECT_TYPE_DEVICE; Object 1: handle = 0x260000000026, type = VK_OBJECT_TYPE_DEVICE_MEMORY; | MessageID = 0x71500fba | OBJ ERROR : For VkDevice 0x55715ebe0240[], VkDeviceMemory 0x260000000026[] has not been destroyed. The Vulkan spec states: All child objects created on device must have been destroyed prior to destroying device (https://www.khronos.org/registry/vulkan/specs/1.3-extensions/html/vkspec.html#VUID-vkDestroyDevice-device-00378)
+[INFO]:  Unloading layer library libVkLayer_MESA_device_select.so
+[INFO]:  Unloading layer library libVkLayer_khronos_validation.so
+[INFO]:  Releasing physical device resources...
+[DEBUG]: Destroying Vulkan surface...
+[DEBUG]: Destroying vulkan renderer
+[DEBUG]: Destroying vulkan instance
+[DEBUG]: testingtesting testeing
